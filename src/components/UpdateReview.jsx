@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CreateReview = (props) => {
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [author, setAuthor] = useState('Anonymous');
+const UpdateReview = (props) => {
+  const [title, setTitle] = useState(props.review.fields.title);
+  const [text, setText] = useState(props.review.fields.text);
+  const [author, setAuthor] = useState(props.review.fields.author);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,18 +13,15 @@ const CreateReview = (props) => {
       text,
       author
     };
-    const airtableURL = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE}/frylife`;
-    // await axios.post(url, data, options (headers))
-    await axios.post(airtableURL, { fields }, {
+    const airtableURL = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE}/frylife/${props.review.id}`;
+    // await axios.put(url, data, options (headers))
+    await axios.put(airtableURL, { fields }, {
       headers: {
         'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`,
         'Content-Type': 'application/json',
       }
     });
     props.setFetchReviews(!props.fetchReviews);
-    setTitle('');
-    setText('');
-    setAuthor('');
   }
 
   // (label+input)*3 with emmet
@@ -56,4 +53,4 @@ const CreateReview = (props) => {
   )
 }
 
-export default CreateReview;
+export default UpdateReview;
