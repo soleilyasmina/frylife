@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CreateReview from './components/CreateReview';
 import Review from './components/Review';
 import './App.css';
 
@@ -28,6 +29,7 @@ function App() {
           ))
         }
       </div>
+      <CreateReview />
     </div>
   );
 }
