@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Review from './components/Review';
 import './App.css';
 
 function App() {
@@ -20,11 +21,13 @@ function App() {
 
   return (
     <div className="App">
-      {
-        reviews.map((review) => (
-          <h4>{review.fields.title}</h4>
-        ))
-      }
+      <div className="review-container">
+        {
+          reviews.map((review) => (
+            <Review review={review} key={review.id} />
+          ))
+        }
+      </div>
     </div>
   );
 }
