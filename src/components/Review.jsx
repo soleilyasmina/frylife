@@ -1,6 +1,7 @@
-import React from 'react';
-import axios from 'axios';
-import UpdateReview from './UpdateReview';
+import React from "react";
+import axios from "axios";
+import UpdateReview from "./UpdateReview";
+import { baseURL } from "./services/constants";
 
 const Review = (props) => {
   const { author, title, text } = props.review.fields;
@@ -8,16 +9,16 @@ const Review = (props) => {
 
   const handleDelete = async () => {
     // the url for airtable must have: the base (database), the table (table), the record in question (rec...)
-    const airtableURL = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE}/frylife/${review.id}`;
+    const airtableURL = `${baseURL}/${review.id}`;
     // axios delete needs an endpoint (url) options (headers)
     await axios.delete(airtableURL, {
       headers: {
-        'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`,
+        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`,
       },
     });
     // refreshing the reviews by firing the useEffect in App.js
     setFetchReviews(!fetchReviews);
-  }
+  };
 
   return (
     <div>
@@ -31,8 +32,7 @@ const Review = (props) => {
       />
       <button onClick={handleDelete}>Yeet!</button>
     </div>
-
-  )
-}
+  );
+};
 
 export default Review;

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import { baseURL } from "../services/constants";
 
 const UpdateReview = (props) => {
   const [title, setTitle] = useState(props.review.fields.title);
@@ -11,18 +12,22 @@ const UpdateReview = (props) => {
     const fields = {
       title,
       text,
-      author
+      author,
     };
-    const airtableURL = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE}/frylife/${props.review.id}`;
+    const airtableURL = `${baseURL}/${props.review.id}`;
     // await axios.put(url, data, options (headers))
-    await axios.put(airtableURL, { fields }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`,
-        'Content-Type': 'application/json',
+    await axios.put(
+      airtableURL,
+      { fields },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
     props.setFetchReviews(!props.fetchReviews);
-  }
+  };
 
   // (label+input)*3 with emmet
   return (
@@ -50,7 +55,7 @@ const UpdateReview = (props) => {
       />
       <button type="submit">Fry Me Cap'n</button>
     </form>
-  )
-}
+  );
+};
 
 export default UpdateReview;
